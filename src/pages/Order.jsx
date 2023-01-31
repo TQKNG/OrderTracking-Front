@@ -36,7 +36,7 @@ const Order = () => {
 
   function onSubmit(e) {
     e.preventDefault();
-    const res = axios.get(`http://localhost:5050/api/tracking/${trackingID}`);
+    const res = axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/tracking/${trackingID}`);
     res
     .then((data) => {
       var convertedOrderDate = new Date(data.data.orderDate);
