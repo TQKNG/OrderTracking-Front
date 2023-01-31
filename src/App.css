@@ -1,38 +1,158 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.center {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
+  max-width: 60%;
+  margin: 50px auto;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.btn-margin {
+  margin: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.customCard {
+  background: rgba(var(--bs-dark-rgb)) !important;
+  color: #fff;
+}
+
+.hide {
+  display: none;
+}
+
+.container-custom{
+  display: flex;
+  margin:0;
+  gap: 10px;
+}
+
+.container-lottie-deliveryMan{
+  position: relative;
+  z-index: 10;
+  top: 0px;
+}
+
+.container-lottie-inprogress {
+  position: relative;
+  z-index: 10;
+  top: 0;
+  width: 70px;
+  height: 70px;
+}
+
+.container-lottie-delivered {
+    position: relative;
+    z-index: 10;
+    top: 0;
+    width: 70px;
+    height: 70px;
   }
-  to {
-    transform: rotate(360deg);
+  
+.container-lottie-sendEmail{
+  position: relative;
+  top: 20rem;
+  width: 200px;
+  height: 200px;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-width:320px) and (max-width: 400px) {
+  /* Styles */
+  .container-custom{
+    flex-direction: column;
+      }
+  .container-lottie-deliveryMan{
+    left: -4rem;
+    width: 20rem;
+    height: 20rem;
+  }
+  .container-lottie-inprogress{
+    left: 1.5rem;
+  }
+  .container-lottie-delivered{
+    right: -3.6rem;
+  }
+  .container-lottie-sendEmail{
+    right: -5rem;
   }
 }
+
+@media only screen and (min-width:400px) and (max-width: 768px) {
+  /* Styles */
+
+  .container-lottie-deliveryMan{
+    left: -6rem;
+    width: 30rem;
+    height: 30rem;
+  }
+
+  .container-lottie-inprogress{
+    left: 3.5rem;
+  }
+  .container-lottie-delivered{
+    right: -6.5rem;
+  }
+  .container-lottie-sendEmail{
+    top: 10rem;
+    right: -10rem;
+  }
+}
+
+@media only screen and (min-width:768px) and (max-width: 1024px) {
+  /* Styles */
+  .container-lottie-inprogress{
+    left: 10rem;
+  }
+  .container-lottie-delivered{
+    right: -18rem;
+  }
+  .container-lottie-sendEmail{
+    right: -18rem;
+  }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width: 1024px) and (max-width:1200px) {
+  /* Styles */
+  .container-lottie-inprogress{
+    left: 12rem;
+  }
+  .container-lottie-delivered{
+    right:-28rem;
+  }
+
+  .container-lottie-sendEmail{
+    right: -25rem;
+  }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width: 1200px) {
+  /* Styles */
+  .container-lottie-inprogress{
+    left: 15rem;
+  }
+  .container-lottie-delivered{
+    right:-33rem;
+  }
+  .container-lottie-sendEmail{
+    right: -40rem;
+  }
+}
+
+/* Large screens ----------- */
+@media only screen and (min-width: 1400px) {
+/* Styles */
+.container-lottie-inprogress{
+  left: 20rem;
+}
+.container-lottie-delivered{
+  right: -40rem;
+}
+.container-lottie-sendEmail{
+  right: -50rem;
+}
+}
+
+
+
