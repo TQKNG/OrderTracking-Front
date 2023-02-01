@@ -14,10 +14,6 @@ const Contact = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setSend(true);
-    setTimeout(()=>{
-      navigate('/');
-    },3000)
     const res = axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/tracking/contact`, {
       email,
       message,
@@ -29,6 +25,10 @@ const Contact = () => {
       .catch((err) => {
         console.log(err);
       });
+      setSend(true);
+      setTimeout(()=>{
+        navigate('/');
+      },3000)
   };
   return (
     <>
