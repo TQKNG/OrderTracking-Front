@@ -2,6 +2,7 @@ import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SendEmail from "../components/SendEmail";
 
@@ -9,11 +10,15 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [send, setSend] = useState(false);
+  const navigate= useNavigate();
 
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
     setSend(true);
-    const res = axios.post("http://localhost:5050/api/tracking/contact", {
+    setTimeout(()=>{
+      navigate('/');
+    },3000)
+    const res = axios.post(`${REACT_APP_BACKEND_URL}/api/tracking/contact`, {
       email,
       message,
     });
