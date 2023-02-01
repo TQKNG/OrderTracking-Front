@@ -12,13 +12,13 @@ const Contact = () => {
   const [send, setSend] = useState(false);
   const navigate= useNavigate();
 
-  const onSubmit = async(e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     setSend(true);
     setTimeout(()=>{
       navigate('/');
     },3000)
-    const res = axios.post(`${REACT_APP_BACKEND_URL}/api/tracking/contact`, {
+    const res = axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/tracking/contact`, {
       email,
       message,
     });
