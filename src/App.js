@@ -4,6 +4,7 @@ import NavbarComp from "./components/Navbar";
 import Home from "./pages/Home";
 import Order from "./pages/Order";
 import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home/>}></Route>
         <Route path="orders" element={<Order/>}></Route>
         <Route path="contact" element={<Contact/>}></Route>
+        <Route path="admin" element={<Admin/>}></Route>
       </Routes>
     <Footer />
     </BrowserRouter>

@@ -1,4 +1,22 @@
-.center {
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background-color: transparent;
+}
+
+.show {
   display: flex;
   width: 100%;
   max-width: 60%;
@@ -11,6 +29,17 @@
   margin: 10px;
 }
 
+.footer {
+  position: fixed;
+  margin: 0px;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+}
+
 .customCard {
   background: rgba(var(--bs-dark-rgb)) !important;
   color: #fff;
@@ -20,13 +49,13 @@
   display: none;
 }
 
-.container-custom{
+.container-custom {
   display: flex;
-  margin:0;
+  margin: 0;
   gap: 10px;
 }
 
-.container-lottie-deliveryMan{
+.container-lottie-deliveryMan {
   position: relative;
   z-index: 10;
   top: 0px;
@@ -41,118 +70,108 @@
 }
 
 .container-lottie-delivered {
-    position: relative;
-    z-index: 10;
-    top: 0;
-    width: 70px;
-    height: 70px;
-  }
-  
-.container-lottie-sendEmail{
+  position: relative;
+  z-index: 10;
+  top: 0;
+  width: 70px;
+  height: 70px;
+}
+
+.container-lottie-sendEmail {
   position: relative;
   top: 20rem;
   width: 200px;
   height: 200px;
 }
 
-/* Smartphones (portrait and landscape) ----------- */
-@media only screen and (min-width:320px) and (max-width: 400px) {
-  /* Styles */
-  .container-custom{
+@media only screen and (min-width: 320px) and (max-width: 400px) {
+  .container-custom {
     flex-direction: column;
-      }
-  .container-lottie-deliveryMan{
+  }
+  .container-lottie-deliveryMan {
+    display: none;
+  }
+  .container-lottie-deliveryMan {
     left: -4rem;
     width: 20rem;
     height: 20rem;
   }
-  .container-lottie-inprogress{
+  .container-lottie-inprogress {
     left: 1.5rem;
   }
-  .container-lottie-delivered{
+  .container-lottie-delivered {
     right: -3.6rem;
   }
-  .container-lottie-sendEmail{
-    right: -5rem;
+  .container-lottie-sendEmail {
+    width: 10rem;
+    top: 10rem;
+    right: -6rem;
   }
 }
 
-@media only screen and (min-width:400px) and (max-width: 768px) {
-  /* Styles */
-
-  .container-lottie-deliveryMan{
-    left: -6rem;
-    width: 30rem;
-    height: 30rem;
+@media only screen and (min-width: 400px) and (max-width: 767px) {
+  .container-lottie-deliveryMan {
+    display: none;
   }
 
-  .container-lottie-inprogress{
+  .container-lottie-inprogress {
     left: 3.5rem;
   }
-  .container-lottie-delivered{
+  .container-lottie-delivered {
     right: -6.5rem;
   }
-  .container-lottie-sendEmail{
+  .container-lottie-sendEmail {
+    width: 15rem;
     top: 10rem;
-    right: -10rem;
+    right: -7.5rem;
   }
 }
 
-@media only screen and (min-width:768px) and (max-width: 1024px) {
-  /* Styles */
-  .container-lottie-inprogress{
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .container-lottie-inprogress {
     left: 10rem;
   }
-  .container-lottie-delivered{
+  .container-lottie-delivered {
     right: -18rem;
   }
-  .container-lottie-sendEmail{
+  .container-lottie-sendEmail {
     right: -18rem;
   }
 }
 
-/* Desktops and laptops ----------- */
-@media only screen and (min-width: 1024px) and (max-width:1200px) {
-  /* Styles */
-  .container-lottie-inprogress{
+@media only screen and (min-width: 1024px) and (max-width: 1200px) {
+  .container-lottie-inprogress {
     left: 12rem;
   }
-  .container-lottie-delivered{
-    right:-28rem;
+  .container-lottie-delivered {
+    right: -28rem;
   }
 
-  .container-lottie-sendEmail{
+  .container-lottie-sendEmail {
     right: -25rem;
   }
 }
 
-/* Desktops and laptops ----------- */
 @media only screen and (min-width: 1200px) {
-  /* Styles */
-  .container-lottie-inprogress{
+  .container-lottie-inprogress {
     left: 15rem;
   }
-  .container-lottie-delivered{
-    right:-33rem;
+  .container-lottie-delivered {
+    right: -33rem;
   }
-  .container-lottie-sendEmail{
+  .container-lottie-sendEmail {
     right: -40rem;
   }
 }
 
-/* Large screens ----------- */
 @media only screen and (min-width: 1400px) {
-/* Styles */
-.container-lottie-inprogress{
-  left: 20rem;
+  .container-lottie-inprogress {
+    left: 20rem;
+  }
+  .container-lottie-delivered {
+    right: -40rem;
+  }
+  .container-lottie-sendEmail {
+    right: -50rem;
+  }
 }
-.container-lottie-delivered{
-  right: -40rem;
-}
-.container-lottie-sendEmail{
-  right: -50rem;
-}
-}
-
-
-

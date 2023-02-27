@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { House, UpcScan, EnvelopeAt} from 'react-bootstrap-icons';
+import { House, UpcScan, EnvelopeAt, People} from 'react-bootstrap-icons';
 
 const NavbarComp = () => {
   return (
@@ -16,6 +16,7 @@ const NavbarComp = () => {
             <Nav.Link  href="/"><House className="m-1"/> Home</Nav.Link>
             <Nav.Link href="orders"><UpcScan className="m-1"/>My Order</Nav.Link>
             <Nav.Link href="contact"><EnvelopeAt className="m-1"/>Contact Form</Nav.Link>
+            <Nav.Link href="admin"><People className="m-1"/>Admin</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

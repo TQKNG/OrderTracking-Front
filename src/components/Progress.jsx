@@ -4,14 +4,14 @@ import StatusDelivered from "./DelieveredStatus";
 import StatusInProgress from "./InProgressStatus";
 
 const Progress = ({ trackingStatus }) => {
-  var now = trackingStatus === "deliever" ? 100 : 50;
-  var color = trackingStatus === "deliever" ? "success" : "warning";
-  var bar = trackingStatus === "deliever" ? "Delivered" : "In Progress";
+  var now = trackingStatus === "Delivered" ? 100 : 50;
+  var color = trackingStatus === "Delivered" ? "success" : "warning";
+  var bar = trackingStatus === "Delivered" ? "Delivered" : "In Progress";
 
   return (
     <div className="container">
     {
-      trackingStatus === "deliever"?<StatusDelivered/> :<StatusInProgress/>
+      trackingStatus === "Delivered"?<StatusDelivered/> :<StatusInProgress/>
     }
       <ProgressBar variant={color} now={now} label={`${bar}`} />
     </div>

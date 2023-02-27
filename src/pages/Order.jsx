@@ -1,20 +1,15 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+import { Button, Card, Form, Container, Row, Badge } from "react-bootstrap";
 import Progress from "../components/Progress";
 import History from "../components/History";
-import Badge from "react-bootstrap/Badge";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 import "../App.css";
 
 const Order = () => {
-  const [trackingID, setID] = useState("");
-  const [invalidID, setInvalidID] = useState(false)
   const [status, setStatus] = useState(false);
   const [trackingStatus, setTrackingStatus] = useState("");
   const [orderNumber, setOrderNumber] = useState("");
@@ -22,49 +17,59 @@ const Order = () => {
   const [orderDate, setOrderDate] = useState("");
   const [pickingDate, setPickingDate] = useState("");
   const [expectedDeliveryDate, setExpectedDeliveryDate] = useState("");
+  const hideHistory = status ? "show" : "hide";
+  const hideTracking = status ? "hide" : "show";
+  const numberOfDayToDelivered = 3;
+  const MotionButton = motion(Button);
 
+  const {
+    register,
+    setValue,
+    setError,
+    handleSubmit,
+    formState: { errors, isDirty, isValid },
+  } = useForm({
+    defaultValues: {
+      trackingID: "",
+    },
+    mode: "onChange",
+  });
   let navigate = useNavigate();
 
-  // Class
-  const hideHistory = status ? "center" : "hide";
-  const hideTracking = status ? "hide" : "center";
-  const numberOfDayToDelivered = 3;
-
-  function onChange(e) {
-    setID(e.target.value);
-  }
-
-  function onSubmit(e) {
-    e.preventDefault();
-    const res = axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/tracking/${trackingID}`);
+  function onSubmit(data) {
+    const res = axios.get(
+      `${process.env.REACT_APP_BACKEND_URL}/api/tracking/${data.trackingID}`
+    );
     res
-    .then((data) => {
-      var convertedOrderDate = new Date(data.data.orderDate);
-      setOrderDate(convertedOrderDate);
-      var convertedPickingDate = new Date(data.data.pickingDate);
-      setPickingDate(convertedPickingDate);
-      var convertedDeliveryDate = new Date(data.data.pickingDate); // Test
-      convertedDeliveryDate = new Date(
-        convertedDeliveryDate.setDate(
-          convertedDeliveryDate.getDate() + numberOfDayToDelivered
-        )
-      );
-      setExpectedDeliveryDate(convertedDeliveryDate);
-      setStatus(true);
-      setInvalidID(false);
-      setOrderNumber(data.data.orderNumber);
-      setTrackingStatus(data.data.trackingStatus);
-      setNote(data.data.note);
-    })
-    .catch((err)=>{
-      setID("")
-      setInvalidID(true);
-    })
+      .then((data) => {
+        var convertedOrderDate = new Date(data.data.orderDate);
+        setOrderDate(convertedOrderDate);
+        var convertedPickingDate = new Date(data.data.pickingDate);
+        setPickingDate(convertedPickingDate);
+        var convertedDeliveryDate = new Date(data.data.pickingDate);
+        convertedDeliveryDate = new Date(
+          convertedDeliveryDate.setDate(
+            convertedDeliveryDate.getDate() + numberOfDayToDelivered
+          )
+        );
+        setExpectedDeliveryDate(convertedDeliveryDate);
+        setStatus(true);
+        setOrderNumber(data.data.orderNumber);
+        setTrackingStatus(data.data.trackingStatus);
+        setNote(data.data.note);
+        setValue("trackingID", "");
+      })
+      .catch((err) => {
+        setValue("trackingID", "");
+        setError("trackingID",{
+          type:"manual",
+          message:"Invalid Tracking ID. Please try again"})
+      });
   }
 
   function trackMore() {
+    setValue("trackingID", "");
     setStatus(false);
-    setID("");
   }
 
   function directToContact() {
@@ -76,41 +81,68 @@ const Order = () => {
       <Container fluid="md">
         <Row className={hideTracking}>
           <h1>Your Tracking Number</h1>
-          <Form onSubmit={onSubmit}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Control
+                {...register("trackingID", {
+                  required: "Tracking ID is required",
+                })}
                 type="text"
                 size="sm"
                 placeholder="Eg: 3456shfiekf"
-                onChange={onChange}
-                value={trackingID}
-                required
               />
-              <Form.Text className="text-muted">
-                The provided code
-              </Form.Text>
+              {errors.trackingID && (
+                <Form.Text className="text-danger">
+                  {errors.trackingID.message}
+                </Form.Text>
+              )}
             </Form.Group>
-            {invalidID&&<p style={{color:"red"}}>Invalid ID! Please Try Again</p>}
-            <Button variant="primary" type="submit">
+            <MotionButton
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              variant="primary"
+              type="submit"
+              disabled={Object.keys(errors).length > 0 || !isDirty || !isValid}
+            >
               Track
-            </Button>
+            </MotionButton>
           </Form>
         </Row>
 
         <Card className={hideHistory} style={{ width: "100%" }}>
           <Card.Header>
-            <h5><strong>Tracking ID:</strong> {trackingID}</h5>
             <h5>
-             <strong>Status:</strong> <Badge bg={trackingStatus==='deliever'?"success":"warning"}>{trackingStatus}</Badge>
+              <strong>Tracking ID:</strong>
             </h5>
-            <h5><strong>Expected Delivery Date:</strong> {expectedDeliveryDate.toString()}</h5>
+            <h5>
+              <strong>Status:</strong>{" "}
+              <Badge
+                bg={trackingStatus === "Delivered" ? "success" : "warning"}
+              >
+                {trackingStatus}
+              </Badge>
+            </h5>
+            <h5>
+              <strong>Expected Delivery Date:</strong>{" "}
+              {expectedDeliveryDate.toString()}
+            </h5>
             <div className="container-custom">
-            <Button variant="outline-primary"  onClick={trackMore}>
+              <MotionButton
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                variant="outline-primary"
+                onClick={trackMore}
+              >
                 Track more
-              </Button>
-              <Button variant="outline-secondary" onClick={directToContact}>
+              </MotionButton>
+              <MotionButton
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                variant="outline-secondary"
+                onClick={directToContact}
+              >
                 Contact us
-              </Button>
+              </MotionButton>
             </div>
           </Card.Header>
           <Card.Body>
