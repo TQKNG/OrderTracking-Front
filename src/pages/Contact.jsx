@@ -19,7 +19,7 @@ const Contact = () => {
   const navigate= useNavigate();
 
   const onSubmit = (data) => {
-    const res = axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/tracking/contact`, {
+    const res = axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/contact`, {
       email: data.email,
       message: data.message
     });
