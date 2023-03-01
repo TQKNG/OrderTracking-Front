@@ -16,7 +16,18 @@ body {
   background-color: transparent;
 }
 
-.show {
+/* Use for Modal display */
+.show { 
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  margin: 50px auto;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Use for table details display */
+.display { 
   display: flex;
   width: 100%;
   max-width: 60%;
@@ -45,6 +56,17 @@ body {
   color: #fff;
 }
 
+.customCard2{
+  width: 18rem;
+}
+
+.customCard2__body{
+  text-align: center;
+  font-size: 3rem;
+}
+.customCard2__title{
+  font-size: 1.5rem;
+}
 .hide {
   display: none;
 }
@@ -53,6 +75,11 @@ body {
   display: flex;
   margin: 0;
   gap: 10px;
+}
+
+.table__controller {
+  background-color: white !important;
+  color: #000 !important;
 }
 
 .container-lottie-deliveryMan {
@@ -125,9 +152,23 @@ body {
     top: 10rem;
     right: -7.5rem;
   }
+
+  .customCard2{
+    width:8rem;
+  }
+  .customCard2__body{
+    font-size: 1.2rem;
+  }
+  .customCard2__title{
+    font-size: 0.9rem;
+  }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .container-lottie-deliveryMan {
+    top: -3rem;
+    left: -2rem;
+  }
   .container-lottie-inprogress {
     left: 10rem;
   }
@@ -137,9 +178,22 @@ body {
   .container-lottie-sendEmail {
     right: -18rem;
   }
+  .customCard2{
+    width:10rem;
+  }
+  .customCard2__body{
+    font-size: 1.2rem;
+  }
+  .customCard2__title{
+    font-size: 1.2rem;
+  }
 }
 
 @media only screen and (min-width: 1024px) and (max-width: 1200px) {
+  .container-lottie-deliveryMan {
+    top: -6rem;
+    left: -2rem;
+  }
   .container-lottie-inprogress {
     left: 12rem;
   }
@@ -150,9 +204,16 @@ body {
   .container-lottie-sendEmail {
     right: -25rem;
   }
+  .customCard2{
+    width:13rem;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
+  .container-lottie-deliveryMan {
+    top: -10rem;
+    left: -2rem;
+  }
   .container-lottie-inprogress {
     left: 15rem;
   }
@@ -162,9 +223,14 @@ body {
   .container-lottie-sendEmail {
     right: -40rem;
   }
+ 
 }
 
 @media only screen and (min-width: 1400px) {
+  .container-lottie-deliveryMan {
+    top: -10rem;
+    left: -2rem;
+  }
   .container-lottie-inprogress {
     left: 20rem;
   }

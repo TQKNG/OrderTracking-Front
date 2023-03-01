@@ -41,7 +41,7 @@ const Contact = () => {
     <>
     {
       send?<SendEmail/>:
-      <Card className="show customCard">
+      <Card className="display customCard">
         <Card.Header as="h5">Contact Us</Card.Header>
         <Card.Body>
           <Form onSubmit={handleSubmit(onSubmit)}>

@@ -6,27 +6,23 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import { useSelector } from "react-redux";
 import "../App.css";
 
 const Order = () => {
-  const [status, setStatus] = useState(false);
-  const [trackingStatus, setTrackingStatus] = useState("");
-  const [orderNumber, setOrderNumber] = useState("");
-  const [note, setNote] = useState("");
-  const [orderDate, setOrderDate] = useState("");
-  const [pickingDate, setPickingDate] = useState("");
-  const [expectedDeliveryDate, setExpectedDeliveryDate] = useState("");
-  const hideHistory = status ? "show" : "hide";
-  const hideTracking = status ? "hide" : "show";
-  const numberOfDayToDelivered = 3;
+  const trackingData = useSelector((state) => state.tracking.data);
+  const [showTrackingDetail, setShowTrackingDetail] = useState(false);
+  const [deliveryDate, setDeliveryDate] = useState();
+  const [trackingItem, setTrackingItem] = useState({});
   const MotionButton = motion(Button);
+  const navigate = useNavigate();
 
   const {
     register,
     setValue,
     setError,
     handleSubmit,
+    reset,
     formState: { errors, isDirty, isValid },
   } = useForm({
     defaultValues: {
@@ -34,42 +30,58 @@ const Order = () => {
     },
     mode: "onChange",
   });
-  let navigate = useNavigate();
 
   function onSubmit(data) {
-    const res = axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}/api/tracking/${data.trackingID}`
-    );
-    res
-      .then((data) => {
-        var convertedOrderDate = new Date(data.data.orderDate);
-        setOrderDate(convertedOrderDate);
-        var convertedPickingDate = new Date(data.data.pickingDate);
-        setPickingDate(convertedPickingDate);
-        var convertedDeliveryDate = new Date(data.data.pickingDate);
-        convertedDeliveryDate = new Date(
-          convertedDeliveryDate.setDate(
-            convertedDeliveryDate.getDate() + numberOfDayToDelivered
-          )
-        );
-        setExpectedDeliveryDate(convertedDeliveryDate);
-        setStatus(true);
-        setOrderNumber(data.data.orderNumber);
-        setTrackingStatus(data.data.trackingStatus);
-        setNote(data.data.note);
-        setValue("trackingID", "");
-      })
-      .catch((err) => {
-        setValue("trackingID", "");
-        setError("trackingID",{
-          type:"manual",
-          message:"Invalid Tracking ID. Please try again"})
+    const item = trackingData.filter((item) => item._id === data.trackingID);
+    if (item.length > 0) {
+      // Convert date string
+      const { orderDate, pickingDate, trackingStatus } = item[0];
+      const convertedOrderDate = new Date(orderDate)
+        .toUTCString()
+        .split(" ")
+        .slice(0, 4)
+        .join(" ");
+      const convertedPickingDate = new Date(pickingDate)
+        .toUTCString()
+        .split(" ")
+        .slice(0, 4)
+        .join(" ");
+
+      setTrackingItem({
+        ...item[0],
+        orderDate: convertedOrderDate,
+        pickingDate: convertedPickingDate,
       });
+
+      // Set delivery date
+      if (trackingStatus === "In Progress") {
+        const estimateDeliveryDate = new Date()
+          .toUTCString()
+          .split(" ")
+          .slice(0, 4)
+          .join(" ");
+        setDeliveryDate(estimateDeliveryDate);
+      }
+
+      // Reset the form value and show the detail
+      setValue("trackingID", "");
+      setShowTrackingDetail(true);
+    } 
+    else {
+      setError("trackingID", {
+        type: "manual",
+        message: "Invalid Tracking ID. Please try again",
+      });
+    }
   }
 
   function trackMore() {
     setValue("trackingID", "");
-    setStatus(false);
+    reset({
+      isDirty: false,
+      isValid: false,
+    });
+    setShowTrackingDetail(false);
   }
 
   function directToContact() {
@@ -79,7 +91,7 @@ const Order = () => {
   return (
     <>
       <Container fluid="md">
-        <Row className={hideTracking}>
+        <Row className={showTrackingDetail ? "hide" : "display"}>
           <h1>Your Tracking Number</h1>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -109,23 +121,36 @@ const Order = () => {
           </Form>
         </Row>
 
-        <Card className={hideHistory} style={{ width: "100%" }}>
+        <Card
+          className={showTrackingDetail ? "display" : "hide"}
+          style={{ width: "100%" }}
+          bg="dark"
+          text="light"
+        >
           <Card.Header>
             <h5>
-              <strong>Tracking ID:</strong>
+              <strong>Tracking ID: </strong>
+              <span>{trackingItem._id}</span>
             </h5>
             <h5>
-              <strong>Status:</strong>{" "}
+              <strong>Status: </strong>
               <Badge
-                bg={trackingStatus === "Delivered" ? "success" : "warning"}
+                bg={
+                  trackingItem.trackingStatus === "Delivered"
+                    ? "success"
+                    : "warning"
+                }
               >
-                {trackingStatus}
+                {trackingItem.trackingStatus}
               </Badge>
             </h5>
-            <h5>
-              <strong>Expected Delivery Date:</strong>{" "}
-              {expectedDeliveryDate.toString()}
-            </h5>
+            {trackingItem?.trackingStatus === "In Progress" && (
+              <h5>
+                <strong>Expected Delivery Date: </strong>
+                <span>{deliveryDate}</span>
+              </h5>
+            )}
+
             <div className="container-custom">
               <MotionButton
                 whileHover={{ scale: 1.1 }}
@@ -147,13 +172,13 @@ const Order = () => {
           </Card.Header>
           <Card.Body>
             <Card.Title>Your Order Progress</Card.Title>
-            <Progress trackingStatus={trackingStatus} />
+            <Progress trackingStatus={trackingItem.trackingStatus} />
             <br />
             <History
-              orderNumber={orderNumber}
-              note={note}
-              orderDate={orderDate.toString()}
-              pickingDate={pickingDate.toString()}
+              orderNumber={trackingItem.orderNumber}
+              orderDate={trackingItem.orderDate}
+              pickingDate={trackingItem.pickingDate}
+              note={trackingItem.note}
             />
           </Card.Body>
         </Card>

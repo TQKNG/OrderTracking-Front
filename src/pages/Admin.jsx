@@ -1,8 +1,19 @@
-import React from 'react'
+import React from 'react';
+import Login from '../components/Login';
+import Dashboard from '../components/Dashboard';
+import {useSelector} from 'react-redux';
 
 const Admin = () => {
+  const isLogin = useSelector(state=>state.admin.isLogin);
   return (
-    <div>Admin</div>
+    <>
+    {
+      isLogin?
+      <Dashboard/>
+      :
+      <Login/>
+    }
+    </>
   )
 }
 

@@ -6,8 +6,16 @@ import Order from "./pages/Order";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {useEffect} from 'react'
+import { useDispatch } from "react-redux";
+import { getTracking } from "./redux/features/tracking/trackingSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(getTracking());
+  })
+
   return (
     <BrowserRouter>
     <NavbarComp />
