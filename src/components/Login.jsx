@@ -53,7 +53,7 @@ const dispatch = useDispatch();
                   required: "User name is required",
                 })}
                 type="text"
-                placeholder="Please enter your username"
+                placeholder="admin"
               />
               {errors.username && (
                 <Form.Text className="text-danger">
@@ -75,6 +75,7 @@ const dispatch = useDispatch();
                   },
                 })}
                 type="password"
+                placeholder="admin2023"
               />
               {errors.password && (
                 <Form.Text className="text-danger">

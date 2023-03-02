@@ -1,4 +1,4 @@
-import { Form, Card, Button } from "react-bootstrap";
+import { Form, Card, Button, Container } from "react-bootstrap";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {motion} from 'framer-motion'
@@ -38,7 +38,7 @@ const Contact = () => {
       },3000);
   };
   return (
-    <>
+    <Container className="d-flex justify-content-center align-items-center">
     {
       send?<SendEmail/>:
       <Card className="display customCard">
@@ -87,7 +87,7 @@ const Contact = () => {
         </Card.Body>
       </Card>
     }
-    </>
+    </Container>
   );
 };
 

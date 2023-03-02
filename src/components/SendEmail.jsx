@@ -14,7 +14,6 @@ const SendEmail = () => {
       animationData: require("./assets/send_email"),
     });
     
-    // Return clean up function here
     return () => instance.destroy();
   }, []);
 

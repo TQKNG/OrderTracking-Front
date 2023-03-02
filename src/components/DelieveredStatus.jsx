@@ -13,8 +13,6 @@ const StatusDelivered = () => {
       autoplay: true,
       animationData: require("./assets/status-delivered.json"),
     });
-    
-    // Return clean up function here
     return () => instance.destroy();
   }, []);
 

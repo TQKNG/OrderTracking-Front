@@ -7,17 +7,11 @@ body {
 body {
   width: 100vw;
   height: 100vh;
-  overflow: auto;
   box-sizing: border-box;
 }
 
-::-webkit-scrollbar {
-  width: 0px;
-  background-color: transparent;
-}
-
 /* Use for Modal display */
-.show { 
+.show {
   display: flex;
   width: 100%;
   max-width: 100%;
@@ -27,7 +21,7 @@ body {
 }
 
 /* Use for table details display */
-.display { 
+.display {
   display: flex;
   width: 100%;
   max-width: 60%;
@@ -56,15 +50,15 @@ body {
   color: #fff;
 }
 
-.customCard2{
-  width: 18rem;
+.customCard2 {
+  width: 16rem;
 }
 
-.customCard2__body{
+.customCard2__body {
   text-align: center;
   font-size: 3rem;
 }
-.customCard2__title{
+.customCard2__title {
   font-size: 1.5rem;
 }
 .hide {
@@ -111,32 +105,23 @@ body {
   height: 200px;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 400px) {
+@media only screen and (min-width: 320px) and (max-width: 576px) {
   .container-custom {
     flex-direction: column;
   }
   .container-lottie-deliveryMan {
     display: none;
   }
-  .container-lottie-deliveryMan {
-    left: -4rem;
-    width: 20rem;
-    height: 20rem;
-  }
+
   .container-lottie-inprogress {
     left: 1.5rem;
   }
   .container-lottie-delivered {
     right: -3.6rem;
   }
-  .container-lottie-sendEmail {
-    width: 10rem;
-    top: 10rem;
-    right: -6rem;
-  }
 }
 
-@media only screen and (min-width: 400px) and (max-width: 767px) {
+@media only screen and (min-width: 576px) and (max-width: 768px) {
   .container-lottie-deliveryMan {
     display: none;
   }
@@ -147,27 +132,13 @@ body {
   .container-lottie-delivered {
     right: -6.5rem;
   }
-  .container-lottie-sendEmail {
-    width: 15rem;
-    top: 10rem;
-    right: -7.5rem;
-  }
-
-  .customCard2{
-    width:8rem;
-  }
-  .customCard2__body{
-    font-size: 1.2rem;
-  }
-  .customCard2__title{
-    font-size: 0.9rem;
-  }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   .container-lottie-deliveryMan {
     top: -3rem;
-    left: -2rem;
+    left: -5rem;
+    width: 25rem;
   }
   .container-lottie-inprogress {
     left: 10rem;
@@ -175,24 +146,22 @@ body {
   .container-lottie-delivered {
     right: -18rem;
   }
-  .container-lottie-sendEmail {
-    right: -18rem;
+
+  .customCard2__title {
+    font-size: 1.0rem;
   }
-  .customCard2{
-    width:10rem;
-  }
-  .customCard2__body{
-    font-size: 1.2rem;
-  }
-  .customCard2__title{
-    font-size: 1.2rem;
+
+  .customCard2__body {
+    text-align: center;
+    font-size: 1.5rem;
   }
 }
 
 @media only screen and (min-width: 1024px) and (max-width: 1200px) {
   .container-lottie-deliveryMan {
-    top: -6rem;
-    left: -2rem;
+    top: -10rem;
+    left: -10rem;
+    width: 40rem;
   }
   .container-lottie-inprogress {
     left: 12rem;
@@ -200,19 +169,17 @@ body {
   .container-lottie-delivered {
     right: -28rem;
   }
-
-  .container-lottie-sendEmail {
-    right: -25rem;
-  }
-  .customCard2{
-    width:13rem;
+  .customCard2__body {
+    text-align: center;
+    font-size: 2rem;
   }
 }
 
 @media only screen and (min-width: 1200px) {
   .container-lottie-deliveryMan {
     top: -10rem;
-    left: -2rem;
+    left: -8rem;
+    width: 40rem;
   }
   .container-lottie-inprogress {
     left: 15rem;
@@ -220,24 +187,18 @@ body {
   .container-lottie-delivered {
     right: -33rem;
   }
-  .container-lottie-sendEmail {
-    right: -40rem;
-  }
- 
 }
 
 @media only screen and (min-width: 1400px) {
   .container-lottie-deliveryMan {
     top: -10rem;
-    left: -2rem;
+    left: -10rem;
+    width: 50rem;
   }
   .container-lottie-inprogress {
     left: 20rem;
   }
   .container-lottie-delivered {
     right: -40rem;
-  }
-  .container-lottie-sendEmail {
-    right: -50rem;
   }
 }

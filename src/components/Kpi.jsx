@@ -1,9 +1,10 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, Col, Container } from "react-bootstrap";
 
 const Kpi = ({title, value, bg}) => {
   return (
-    <>
+    <Container>
+      <Col className="d-flex justify-content-center">
       <Card
         bg={bg}
         key="dark"
@@ -16,7 +17,8 @@ const Kpi = ({title, value, bg}) => {
           <Card.Text>{value}</Card.Text>
         </Card.Body>
       </Card>
-    </>
+      </Col>
+    </Container>
   );
 };
 

@@ -13,8 +13,6 @@ const DeliveryMan = () => {
       autoplay: true,
       animationData: require("./assets/delivery_man.json"),
     });
-    
-    // Return clean up function here
     return () => instance.destroy();
   }, []);
 

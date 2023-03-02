@@ -13,8 +13,6 @@ const StatusInProgress = () => {
       autoplay: true,
       animationData: require("./assets/status-inprogress.json"),
     });
-    
-    // Return clean up function here
     return () => instance.destroy();
   }, []);
 

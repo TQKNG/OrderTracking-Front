@@ -6,7 +6,6 @@ export const store = configureStore({
     reducer:{
         tracking: trackingSlice,
         admin: adminSlice
-        
     }
 })
 

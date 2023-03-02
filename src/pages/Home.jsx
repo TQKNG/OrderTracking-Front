@@ -12,19 +12,21 @@ const Home = () => {
   };
 
   return (
-    <Container fluid="md">
+    <Container lg="fluid" className="d-flex align-items-center justify-content-center">
       <Row className="px-4 my-5">
-        <Col md={8}>
+        <Col md={6} lg={6}>
           <DeliveryMan />
         </Col>
-        <Col md={4} className="mt-5">
+        <Col md={6} lg={6} className="mt-5">
           <h1>Order Tracking App</h1>
-          <h2>Feature</h2>
           <p>
-            This is a demo Order Tracking application with tracking feature,
-            which allow customer to query their shipment status based on the
-            provided tracking id. Beside that, the customer can also email the
-            admin via Contact Form. CRUD Management for admin
+            This application assists warehouse manager:
+            <ul>
+              <li>Tracking outbound shipment to customer</li>
+              <li>Manage the tracking with CRUD operation </li>
+              <li>Monitor the operation with KPIs </li>
+              <li>Share tracking information to customer service dept </li>
+            </ul>
           </p>
           <MotionButton
             onClick={onClick}

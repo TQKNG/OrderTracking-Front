@@ -72,7 +72,7 @@ const TrackingDetails = () => {
   }
 
   return (
-    <>
+    <Container>
       <Table
         responsive
         striped
@@ -125,7 +125,7 @@ const TrackingDetails = () => {
                 <Form.Control
                   {...register("searchString")}
                   type="search"
-                  placeholder="Search"
+                  placeholder="Search by Order Number"
                   className="me-2"
                   aria-label="Search"
                 />
@@ -178,7 +178,7 @@ const TrackingDetails = () => {
         </tbody>
       </Table>
       {showInput && <InputTracking input={input} />}
-    </>
+    </Container>
   );
 };
 
