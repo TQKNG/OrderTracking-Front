@@ -25,7 +25,7 @@ const TrackingDetails = () => {
       return <Badge bg="warning">{status}</Badge>;
     }
   };
-  const { register,handleSubmit} = useForm({
+  const { register,handleSubmit, reset} = useForm({
     defaultValues:{
       searchString:"",
     },
@@ -68,7 +68,8 @@ const TrackingDetails = () => {
   };
 
   const handleSearchTracking =(data)=>{
-    dispatch(FILTER_DATA(data))
+    dispatch(FILTER_DATA(data));
+    reset();
   }
 
   return (
