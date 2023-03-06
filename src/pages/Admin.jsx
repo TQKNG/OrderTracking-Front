@@ -6,11 +6,10 @@ import { Container } from 'react-bootstrap';
 
 const Admin = () => {
   const isLogin = useSelector(state=>state.admin.isLogin);
-  const isLoading = useSelector(state=>state.tracking.status);
   return (
     <Container>
     {
-      (isLogin && isLoading==="updated")?
+      (isLogin)?
       <Dashboard/>
       :
       <Login/>
