@@ -6,6 +6,12 @@ export const getAllTracking = async()=>{
     return response.data;
 }
 
+// Get tracking by id
+export const getTrackingById = async(id)=>{
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/tracking/${id}`);
+    return response.data;
+}
+
 // Add tracking
 export const addNewTracking = async(data)=>{
     const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/tracking`, data);

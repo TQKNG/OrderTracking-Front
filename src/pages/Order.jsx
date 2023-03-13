@@ -6,11 +6,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getOneTracking } from "../redux/features/tracking/trackingSlice";
 import "../App.css";
 
 const Order = () => {
-  const trackingData = useSelector((state) => state.tracking.data);
+  const dispatch = useDispatch();
+  const status = useSelector((state)=>state.tracking.status);
   const [showTrackingDetail, setShowTrackingDetail] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState();
   const [trackingItem, setTrackingItem] = useState({});
@@ -32,10 +34,12 @@ const Order = () => {
   });
 
   function onSubmit(data) {
-    const item = trackingData.filter((item) => item._id === data.trackingID);
-    if (item.length > 0) {
-      // Convert date string
-      const { orderDate, pickingDate, trackingStatus } = item[0];
+    dispatch(getOneTracking(data.trackingID))
+    .then((res)=>{
+      if(status === "updated"){
+        const { orderDate, pickingDate, trackingStatus } = res.payload;
+        
+        // Convert date string
       const convertedOrderDate = new Date(orderDate)
         .toUTCString()
         .split(" ")
@@ -48,7 +52,7 @@ const Order = () => {
         .join(" ");
 
       setTrackingItem({
-        ...item[0],
+        ...res.payload,
         orderDate: convertedOrderDate,
         pickingDate: convertedPickingDate,
       });
@@ -66,12 +70,15 @@ const Order = () => {
       // Reset the form value and show the detail
       setValue("trackingID", "");
       setShowTrackingDetail(true);
-    } else {
+    }
+    })
+    .catch((err)=>{
       setError("trackingID", {
         type: "manual",
         message: "Invalid Tracking ID. Please try again",
       });
-    }
+      setValue("trackingID", "");
+    })
   }
 
   function trackMore() {

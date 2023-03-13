@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getAllTracking,
+  getTrackingById,
   addNewTracking,
   deleteOneTracking,
   updateOneTracking,
@@ -9,6 +10,7 @@ import {
 const initialState = {
   status: "idle",
   data: [],
+  trackingItem:{},
   error: {},
   filteredData:[],
   filteredOption:"All",
@@ -21,6 +23,13 @@ export const getTracking = createAsyncThunk(
   "tracking/getAllTracking",
   async () => {
     return await getAllTracking();
+  }
+);
+
+export const getOneTracking = createAsyncThunk(
+  "tracking/getOneTracking",
+  async (id)=>{
+    return await getTrackingById(id);
   }
 );
 
@@ -90,6 +99,17 @@ const trackingSlice = createSlice({
         state.status = "idle";
       })
       .addCase(getTracking.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.payload;
+      })
+      .addCase(getOneTracking.fulfilled,(state,action)=>{
+        state.status = "updated";
+        state.trackingItem = action.payload;
+      })
+      .addCase(getOneTracking.pending,(state,action)=>{
+        state.status = "idle";
+      })
+      .addCase(getOneTracking.rejected,(state,action)=>{
         state.status = "error";
         state.error = action.payload;
       })
