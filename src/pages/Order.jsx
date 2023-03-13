@@ -1,5 +1,13 @@
 import React from "react";
-import { Button, Card, Form, Container, Row, Badge } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Form,
+  Container,
+  Row,
+  Badge,
+  Spinner,
+} from "react-bootstrap";
 import Progress from "../components/Progress";
 import History from "../components/History";
 import { useState } from "react";
@@ -12,7 +20,7 @@ import "../App.css";
 
 const Order = () => {
   const dispatch = useDispatch();
-  const status = useSelector((state)=>state.tracking.status);
+  const status = useSelector((state) => state.tracking.status);
   const [showTrackingDetail, setShowTrackingDetail] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState();
   const [trackingItem, setTrackingItem] = useState({});
@@ -35,50 +43,50 @@ const Order = () => {
 
   function onSubmit(data) {
     dispatch(getOneTracking(data.trackingID))
-    .then((res)=>{
-      if(status === "updated"){
-        const { orderDate, pickingDate, trackingStatus } = res.payload;
-        
-        // Convert date string
-      const convertedOrderDate = new Date(orderDate)
-        .toUTCString()
-        .split(" ")
-        .slice(0, 4)
-        .join(" ");
-      const convertedPickingDate = new Date(pickingDate)
-        .toUTCString()
-        .split(" ")
-        .slice(0, 4)
-        .join(" ");
+      .then((res) => {
+        if (status === "updated") {
+          const { orderDate, pickingDate, trackingStatus } = res.payload;
 
-      setTrackingItem({
-        ...res.payload,
-        orderDate: convertedOrderDate,
-        pickingDate: convertedPickingDate,
+          // Convert date string
+          const convertedOrderDate = new Date(orderDate)
+            .toUTCString()
+            .split(" ")
+            .slice(0, 4)
+            .join(" ");
+          const convertedPickingDate = new Date(pickingDate)
+            .toUTCString()
+            .split(" ")
+            .slice(0, 4)
+            .join(" ");
+
+          setTrackingItem({
+            ...res.payload,
+            orderDate: convertedOrderDate,
+            pickingDate: convertedPickingDate,
+          });
+
+          // Set delivery date
+          if (trackingStatus === "In Progress") {
+            const estimateDeliveryDate = new Date()
+              .toUTCString()
+              .split(" ")
+              .slice(0, 4)
+              .join(" ");
+            setDeliveryDate(estimateDeliveryDate);
+          }
+
+          // Reset the form value and show the detail
+          setValue("trackingID", "");
+          setShowTrackingDetail(true);
+        }
+      })
+      .catch((err) => {
+        setError("trackingID", {
+          type: "manual",
+          message: "Invalid Tracking ID. Please try again",
+        });
+        setValue("trackingID", "");
       });
-
-      // Set delivery date
-      if (trackingStatus === "In Progress") {
-        const estimateDeliveryDate = new Date()
-          .toUTCString()
-          .split(" ")
-          .slice(0, 4)
-          .join(" ");
-        setDeliveryDate(estimateDeliveryDate);
-      }
-
-      // Reset the form value and show the detail
-      setValue("trackingID", "");
-      setShowTrackingDetail(true);
-    }
-    })
-    .catch((err)=>{
-      setError("trackingID", {
-        type: "manual",
-        message: "Invalid Tracking ID. Please try again",
-      });
-      setValue("trackingID", "");
-    })
   }
 
   function trackMore() {
@@ -135,67 +143,75 @@ const Order = () => {
           </Form>
         </Row>
 
-        <Card
-          className={showTrackingDetail ? "display" : "hide"}
-          style={{ width: "100%" }}
-          bg="dark"
-          text="light"
-        >
-          <Card.Header>
-            <h5>
-              <strong>Tracking ID: </strong>
-              <span>{trackingItem._id}</span>
-            </h5>
-            <h5>
-              <strong>Status: </strong>
-              <Badge
-                bg={
-                  trackingItem.trackingStatus === "Delivered"
-                    ? "success"
-                    : "warning"
-                }
-              >
-                {trackingItem.trackingStatus}
-              </Badge>
-            </h5>
-            {trackingItem?.trackingStatus === "In Progress" && (
+        {status === "idle" ? (
+          <Row style={{alignItems:"center", justifyContent:"center"}}>
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </Row>
+        ) : (
+          <Card
+            className={showTrackingDetail ? "display" : "hide"}
+            style={{ width: "100%" }}
+            bg="dark"
+            text="light"
+          >
+            <Card.Header>
               <h5>
-                <strong>Expected Delivery Date: </strong>
-                <span>{deliveryDate}</span>
+                <strong>Tracking ID: </strong>
+                <span>{trackingItem._id}</span>
               </h5>
-            )}
+              <h5>
+                <strong>Status: </strong>
+                <Badge
+                  bg={
+                    trackingItem.trackingStatus === "Delivered"
+                      ? "success"
+                      : "warning"
+                  }
+                >
+                  {trackingItem.trackingStatus}
+                </Badge>
+              </h5>
+              {trackingItem?.trackingStatus === "In Progress" && (
+                <h5>
+                  <strong>Expected Delivery Date: </strong>
+                  <span>{deliveryDate}</span>
+                </h5>
+              )}
 
-            <div className="container-custom">
-              <MotionButton
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                variant="outline-primary"
-                onClick={trackMore}
-              >
-                Track more
-              </MotionButton>
-              <MotionButton
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                variant="outline-secondary"
-                onClick={directToContact}
-              >
-                Contact us
-              </MotionButton>
-            </div>
-          </Card.Header>
-          <Card.Body>
-            <Card.Title>Your Order Progress</Card.Title>
-            <Progress trackingStatus={trackingItem.trackingStatus} />
-            <br />
-            <History
-              orderNumber={trackingItem.orderNumber}
-              orderDate={trackingItem.orderDate}
-              pickingDate={trackingItem.pickingDate}
-              note={trackingItem.note}
-            />
-          </Card.Body>
-        </Card>
+              <div className="container-custom">
+                <MotionButton
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  variant="outline-primary"
+                  onClick={trackMore}
+                >
+                  Track more
+                </MotionButton>
+                <MotionButton
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  variant="outline-secondary"
+                  onClick={directToContact}
+                >
+                  Contact us
+                </MotionButton>
+              </div>
+            </Card.Header>
+            <Card.Body>
+              <Card.Title>Your Order Progress</Card.Title>
+              <Progress trackingStatus={trackingItem.trackingStatus} />
+              <br />
+              <History
+                orderNumber={trackingItem.orderNumber}
+                orderDate={trackingItem.orderDate}
+                pickingDate={trackingItem.pickingDate}
+                note={trackingItem.note}
+              />
+            </Card.Body>
+          </Card>
+        )}
       </Container>
     </>
   );
