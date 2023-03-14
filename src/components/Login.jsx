@@ -2,13 +2,13 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { Form, Card, Button } from "react-bootstrap";
-import {useDispatch} from "react-redux";
-import axios from "axios";
-import { SET_LOGIN } from "../redux/features/admin/adminSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getLoginUser } from "../redux/features/admin/adminSlice";
 
 const Login = () => {
-const MotionButton = motion(Button);
-const dispatch = useDispatch();
+  const MotionButton = motion(Button);
+  const admin = useSelector((state)=>state.admin)
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -17,29 +17,27 @@ const dispatch = useDispatch();
     formState: { errors, isDirty, isValid },
   } = useForm({
     defaultValues: {
-        username: "",
-        password: "",
+      username: "",
+      password: "",
     },
-    mode:"onChange"
+    mode: "onChange",
   });
 
-  const onSubmit = (data)=>{
-    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/login`,data)
-    .then((user)=>{
+  const onSubmit = (data) => {
+    dispatch(getLoginUser(data))
+    .then((res)=>{
+      if(typeof res.payload === 'undefined'){
+        setError("username", {
+          type: "manual",
+          message: admin.message,
+        });
         setValue("username","");
         setValue("password","");
-        dispatch(SET_LOGIN(true));
+      }
+ 
     })
-    .catch((err)=>{
-        setError("username",{
-          type:"manual",
-          message:"User name or password is incorrect. Please try again"
-        }
-        )
-        setValue("username","");
-        setValue("password","");
-    })
-  }
+  };
+
   return (
     <>
       <Card className="display customCard">
