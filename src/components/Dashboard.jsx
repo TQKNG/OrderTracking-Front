@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Kpi from "../components/Kpi";
 import TrackingDetails from "./TrackingDetails";
+import { getTracking } from "../redux/features/tracking/trackingSlice";
+
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const trackingData = useSelector((state) => state.tracking.data);
   const totalTracking = trackingData.length;
   const inProgressTracking = trackingData.filter(
@@ -13,6 +16,10 @@ const Dashboard = () => {
     (item) => item.trackingStatus === "Delivered"
   ).length;
   const fulfilmentRate = ((deliveredTracking / totalTracking) * 100).toFixed(2);
+
+  useEffect(() => {
+    dispatch(getTracking());
+  }, []);
 
   return (
     <Container className="mt-5">

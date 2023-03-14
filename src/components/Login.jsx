@@ -28,7 +28,7 @@ const dispatch = useDispatch();
     .then((user)=>{
         setValue("username","");
         setValue("password","");
-        dispatch(SET_LOGIN(true))
+        dispatch(SET_LOGIN(true));
     })
     .catch((err)=>{
         setError("username",{

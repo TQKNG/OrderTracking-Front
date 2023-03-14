@@ -21,7 +21,6 @@ import "../App.css";
 const Order = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.tracking.isLoading);
-  const status = useSelector((state) => state.tracking.status);
   const [showTrackingDetail, setShowTrackingDetail] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState();
   const [trackingItem, setTrackingItem] = useState({});
