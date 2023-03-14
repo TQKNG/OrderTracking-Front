@@ -15,6 +15,7 @@ const initialState = {
   filteredData:[],
   filteredOption:"All",
   showInput: false,
+  isLoading: false
 };
 
 // API
@@ -103,14 +104,14 @@ const trackingSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(getOneTracking.fulfilled,(state,action)=>{
-        state.status = "updated";
+        state.isLoading = false
         state.trackingItem = action.payload;
       })
       .addCase(getOneTracking.pending,(state,action)=>{
-        state.status = "idle";
+        state.isLoading = true
       })
       .addCase(getOneTracking.rejected,(state,action)=>{
-        state.status = "error";
+        state.isLoading = false
         state.error = action.payload;
       })
       .addCase(addTracking.fulfilled, (state, action) => {

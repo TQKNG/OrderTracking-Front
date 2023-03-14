@@ -12,9 +12,9 @@ import { getTracking } from "./redux/features/tracking/trackingSlice";
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(getTracking());
-  })
+  // useEffect(()=>{
+  //   dispatch(getTracking());
+  // })
 
   return (
     <BrowserRouter>

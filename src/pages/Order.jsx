@@ -20,6 +20,7 @@ import "../App.css";
 
 const Order = () => {
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.tracking.isLoading);
   const status = useSelector((state) => state.tracking.status);
   const [showTrackingDetail, setShowTrackingDetail] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState();
@@ -44,7 +45,7 @@ const Order = () => {
   function onSubmit(data) {
     dispatch(getOneTracking(data.trackingID))
       .then((res) => {
-        if (status === "updated") {
+        if (!isLoading) {
           const { orderDate, pickingDate, trackingStatus } = res.payload;
 
           // Convert date string
@@ -143,7 +144,7 @@ const Order = () => {
           </Form>
         </Row>
 
-        {status === "idle" ? (
+        {isLoading? (
           <Row style={{alignItems:"center", justifyContent:"center"}}>
             <Spinner animation="border" role="status">
               <span className="visually-hidden">Loading...</span>
