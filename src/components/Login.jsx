@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import { Form, Card, Button } from "react-bootstrap";
+import { Form, Card, Button} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoginUser } from "../redux/features/admin/adminSlice";
 
